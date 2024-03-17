@@ -6,24 +6,24 @@
 #include <vector>
 
 using namespace std;
-
-int dfs(vector<int> number, int n, int t, int depth){
-    int answer = 0;
-    if(number.size() == depth)
+int ans = 0;
+void dfs(vector<int>& number, int n, int t, int depth){
+    if(number.size() == depth){
         if(n == t)
-            return 1;
-        else
-            return 0;
+            ++ans;
+        return;
+    }
+
+    dfs(number, n+number[depth], t, depth+1);
+    dfs(number, n-number[depth], t, depth+1);
     
-    answer += dfs(number, n+number[depth], t, depth+1);
-    answer += dfs(number, n-number[depth], t, depth+1);
-    
-    return answer;
+    return;
 }
 
 int solution(vector<int> numbers, int target) {
     int answer = 0;
-    answer = dfs(numbers, 0, target, 0);
     
+    dfs(numbers, 0, target, 0);
+    answer = ans;
     return answer;
 }
